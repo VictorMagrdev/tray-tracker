@@ -7,7 +7,7 @@ include(CheckCXXCompilerFlag)
 include(CheckCXXSourceCompiles)
 
 
-macro(myproject_supports_sanitizers)
+macro(tray_tracker_supports_sanitizers)
   if((CMAKE_CXX_COMPILER_ID MATCHES ".*Clang.*" OR CMAKE_CXX_COMPILER_ID MATCHES ".*GNU.*") AND NOT WIN32)
 
     message(STATUS "Sanity checking UndefinedBehaviorSanitizer, it should be supported on this platform")
@@ -54,183 +54,183 @@ macro(myproject_supports_sanitizers)
   endif()
 endmacro()
 
-macro(myproject_setup_options)
-  option(myproject_ENABLE_HARDENING "Enable hardening" ON)
-  option(myproject_ENABLE_COVERAGE "Enable coverage reporting" OFF)
+macro(tray_tracker_setup_options)
+  option(tray_tracker_ENABLE_HARDENING "Enable hardening" ON)
+  option(tray_tracker_ENABLE_COVERAGE "Enable coverage reporting" OFF)
   cmake_dependent_option(
-    myproject_ENABLE_GLOBAL_HARDENING
+    tray_tracker_ENABLE_GLOBAL_HARDENING
     "Attempt to push hardening options to built dependencies"
     ON
-    myproject_ENABLE_HARDENING
+    tray_tracker_ENABLE_HARDENING
     OFF)
 
-  myproject_supports_sanitizers()
+  tray_tracker_supports_sanitizers()
 
-  if(NOT PROJECT_IS_TOP_LEVEL OR myproject_PACKAGING_MAINTAINER_MODE)
-    option(myproject_ENABLE_IPO "Enable IPO/LTO" OFF)
-    option(myproject_WARNINGS_AS_ERRORS "Treat Warnings As Errors" OFF)
-    option(myproject_ENABLE_USER_LINKER "Enable user-selected linker" OFF)
-    option(myproject_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
-    option(myproject_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
-    option(myproject_ENABLE_CLANG_TIDY "Enable clang-tidy" OFF)
-    option(myproject_ENABLE_CPPCHECK "Enable cpp-check analysis" OFF)
-    option(myproject_ENABLE_PCH "Enable precompiled headers" OFF)
-    option(myproject_ENABLE_CACHE "Enable ccache" OFF)
+  if(NOT PROJECT_IS_TOP_LEVEL OR tray_tracker_PACKAGING_MAINTAINER_MODE)
+    option(tray_tracker_ENABLE_IPO "Enable IPO/LTO" OFF)
+    option(tray_tracker_WARNINGS_AS_ERRORS "Treat Warnings As Errors" OFF)
+    option(tray_tracker_ENABLE_USER_LINKER "Enable user-selected linker" OFF)
+    option(tray_tracker_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" OFF)
+    option(tray_tracker_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
+    option(tray_tracker_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" OFF)
+    option(tray_tracker_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
+    option(tray_tracker_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
+    option(tray_tracker_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
+    option(tray_tracker_ENABLE_CLANG_TIDY "Enable clang-tidy" OFF)
+    option(tray_tracker_ENABLE_CPPCHECK "Enable cpp-check analysis" OFF)
+    option(tray_tracker_ENABLE_PCH "Enable precompiled headers" OFF)
+    option(tray_tracker_ENABLE_CACHE "Enable ccache" OFF)
   else()
-    option(myproject_ENABLE_IPO "Enable IPO/LTO" ON)
-    option(myproject_WARNINGS_AS_ERRORS "Treat Warnings As Errors" ON)
-    option(myproject_ENABLE_USER_LINKER "Enable user-selected linker" OFF)
-    option(myproject_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" ${SUPPORTS_ASAN})
-    option(myproject_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" ${SUPPORTS_UBSAN})
-    option(myproject_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
-    option(myproject_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
-    option(myproject_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
-    option(myproject_ENABLE_CLANG_TIDY "Enable clang-tidy" ON)
-    option(myproject_ENABLE_CPPCHECK "Enable cpp-check analysis" ON)
-    option(myproject_ENABLE_PCH "Enable precompiled headers" OFF)
-    option(myproject_ENABLE_CACHE "Enable ccache" ON)
+    option(tray_tracker_ENABLE_IPO "Enable IPO/LTO" ON)
+    option(tray_tracker_WARNINGS_AS_ERRORS "Treat Warnings As Errors" ON)
+    option(tray_tracker_ENABLE_USER_LINKER "Enable user-selected linker" OFF)
+    option(tray_tracker_ENABLE_SANITIZER_ADDRESS "Enable address sanitizer" ${SUPPORTS_ASAN})
+    option(tray_tracker_ENABLE_SANITIZER_LEAK "Enable leak sanitizer" OFF)
+    option(tray_tracker_ENABLE_SANITIZER_UNDEFINED "Enable undefined sanitizer" ${SUPPORTS_UBSAN})
+    option(tray_tracker_ENABLE_SANITIZER_THREAD "Enable thread sanitizer" OFF)
+    option(tray_tracker_ENABLE_SANITIZER_MEMORY "Enable memory sanitizer" OFF)
+    option(tray_tracker_ENABLE_UNITY_BUILD "Enable unity builds" OFF)
+    option(tray_tracker_ENABLE_CLANG_TIDY "Enable clang-tidy" ON)
+    option(tray_tracker_ENABLE_CPPCHECK "Enable cpp-check analysis" ON)
+    option(tray_tracker_ENABLE_PCH "Enable precompiled headers" OFF)
+    option(tray_tracker_ENABLE_CACHE "Enable ccache" ON)
   endif()
 
   if(NOT PROJECT_IS_TOP_LEVEL)
     mark_as_advanced(
-      myproject_ENABLE_IPO
-      myproject_WARNINGS_AS_ERRORS
-      myproject_ENABLE_USER_LINKER
-      myproject_ENABLE_SANITIZER_ADDRESS
-      myproject_ENABLE_SANITIZER_LEAK
-      myproject_ENABLE_SANITIZER_UNDEFINED
-      myproject_ENABLE_SANITIZER_THREAD
-      myproject_ENABLE_SANITIZER_MEMORY
-      myproject_ENABLE_UNITY_BUILD
-      myproject_ENABLE_CLANG_TIDY
-      myproject_ENABLE_CPPCHECK
-      myproject_ENABLE_COVERAGE
-      myproject_ENABLE_PCH
-      myproject_ENABLE_CACHE)
+      tray_tracker_ENABLE_IPO
+      tray_tracker_WARNINGS_AS_ERRORS
+      tray_tracker_ENABLE_USER_LINKER
+      tray_tracker_ENABLE_SANITIZER_ADDRESS
+      tray_tracker_ENABLE_SANITIZER_LEAK
+      tray_tracker_ENABLE_SANITIZER_UNDEFINED
+      tray_tracker_ENABLE_SANITIZER_THREAD
+      tray_tracker_ENABLE_SANITIZER_MEMORY
+      tray_tracker_ENABLE_UNITY_BUILD
+      tray_tracker_ENABLE_CLANG_TIDY
+      tray_tracker_ENABLE_CPPCHECK
+      tray_tracker_ENABLE_COVERAGE
+      tray_tracker_ENABLE_PCH
+      tray_tracker_ENABLE_CACHE)
   endif()
 
-  myproject_check_libfuzzer_support(LIBFUZZER_SUPPORTED)
-  if(LIBFUZZER_SUPPORTED AND (myproject_ENABLE_SANITIZER_ADDRESS OR myproject_ENABLE_SANITIZER_THREAD OR myproject_ENABLE_SANITIZER_UNDEFINED))
+  tray_tracker_check_libfuzzer_support(LIBFUZZER_SUPPORTED)
+  if(LIBFUZZER_SUPPORTED AND (tray_tracker_ENABLE_SANITIZER_ADDRESS OR tray_tracker_ENABLE_SANITIZER_THREAD OR tray_tracker_ENABLE_SANITIZER_UNDEFINED))
     set(DEFAULT_FUZZER ON)
   else()
     set(DEFAULT_FUZZER OFF)
   endif()
 
-  option(myproject_BUILD_FUZZ_TESTS "Enable fuzz testing executable" ${DEFAULT_FUZZER})
+  option(tray_tracker_BUILD_FUZZ_TESTS "Enable fuzz testing executable" ${DEFAULT_FUZZER})
 
 endmacro()
 
-macro(myproject_global_options)
-  if(myproject_ENABLE_IPO)
+macro(tray_tracker_global_options)
+  if(tray_tracker_ENABLE_IPO)
     include(cmake/InterproceduralOptimization.cmake)
-    myproject_enable_ipo()
+    tray_tracker_enable_ipo()
   endif()
 
-  myproject_supports_sanitizers()
+  tray_tracker_supports_sanitizers()
 
-  if(myproject_ENABLE_HARDENING AND myproject_ENABLE_GLOBAL_HARDENING)
+  if(tray_tracker_ENABLE_HARDENING AND tray_tracker_ENABLE_GLOBAL_HARDENING)
     include(cmake/Hardening.cmake)
     if(NOT SUPPORTS_UBSAN 
-       OR myproject_ENABLE_SANITIZER_UNDEFINED
-       OR myproject_ENABLE_SANITIZER_ADDRESS
-       OR myproject_ENABLE_SANITIZER_THREAD
-       OR myproject_ENABLE_SANITIZER_LEAK)
+       OR tray_tracker_ENABLE_SANITIZER_UNDEFINED
+       OR tray_tracker_ENABLE_SANITIZER_ADDRESS
+       OR tray_tracker_ENABLE_SANITIZER_THREAD
+       OR tray_tracker_ENABLE_SANITIZER_LEAK)
       set(ENABLE_UBSAN_MINIMAL_RUNTIME FALSE)
     else()
       set(ENABLE_UBSAN_MINIMAL_RUNTIME TRUE)
     endif()
-    message("${myproject_ENABLE_HARDENING} ${ENABLE_UBSAN_MINIMAL_RUNTIME} ${myproject_ENABLE_SANITIZER_UNDEFINED}")
-    myproject_enable_hardening(myproject_options ON ${ENABLE_UBSAN_MINIMAL_RUNTIME})
+    message("${tray_tracker_ENABLE_HARDENING} ${ENABLE_UBSAN_MINIMAL_RUNTIME} ${tray_tracker_ENABLE_SANITIZER_UNDEFINED}")
+    tray_tracker_enable_hardening(tray_tracker_options ON ${ENABLE_UBSAN_MINIMAL_RUNTIME})
   endif()
 endmacro()
 
-macro(myproject_local_options)
+macro(tray_tracker_local_options)
   if(PROJECT_IS_TOP_LEVEL)
     include(cmake/StandardProjectSettings.cmake)
   endif()
 
-  add_library(myproject_warnings INTERFACE)
-  add_library(myproject_options INTERFACE)
+  add_library(tray_tracker_warnings INTERFACE)
+  add_library(tray_tracker_options INTERFACE)
 
   include(cmake/CompilerWarnings.cmake)
-  myproject_set_project_warnings(
-    myproject_warnings
-    ${myproject_WARNINGS_AS_ERRORS}
+  tray_tracker_set_project_warnings(
+    tray_tracker_warnings
+    ${tray_tracker_WARNINGS_AS_ERRORS}
     ""
     ""
     ""
     "")
 
-  if(myproject_ENABLE_USER_LINKER)
+  if(tray_tracker_ENABLE_USER_LINKER)
     include(cmake/Linker.cmake)
-    myproject_configure_linker(myproject_options)
+    tray_tracker_configure_linker(tray_tracker_options)
   endif()
 
   include(cmake/Sanitizers.cmake)
-  myproject_enable_sanitizers(
-    myproject_options
-    ${myproject_ENABLE_SANITIZER_ADDRESS}
-    ${myproject_ENABLE_SANITIZER_LEAK}
-    ${myproject_ENABLE_SANITIZER_UNDEFINED}
-    ${myproject_ENABLE_SANITIZER_THREAD}
-    ${myproject_ENABLE_SANITIZER_MEMORY})
+  tray_tracker_enable_sanitizers(
+    tray_tracker_options
+    ${tray_tracker_ENABLE_SANITIZER_ADDRESS}
+    ${tray_tracker_ENABLE_SANITIZER_LEAK}
+    ${tray_tracker_ENABLE_SANITIZER_UNDEFINED}
+    ${tray_tracker_ENABLE_SANITIZER_THREAD}
+    ${tray_tracker_ENABLE_SANITIZER_MEMORY})
 
-  set_target_properties(myproject_options PROPERTIES UNITY_BUILD ${myproject_ENABLE_UNITY_BUILD})
+  set_target_properties(tray_tracker_options PROPERTIES UNITY_BUILD ${tray_tracker_ENABLE_UNITY_BUILD})
 
-  if(myproject_ENABLE_PCH)
+  if(tray_tracker_ENABLE_PCH)
     target_precompile_headers(
-      myproject_options
+      tray_tracker_options
       INTERFACE
       <vector>
       <string>
       <utility>)
   endif()
 
-  if(myproject_ENABLE_CACHE)
+  if(tray_tracker_ENABLE_CACHE)
     include(cmake/Cache.cmake)
-    myproject_enable_cache()
+    tray_tracker_enable_cache()
   endif()
 
   include(cmake/StaticAnalyzers.cmake)
-  if(myproject_ENABLE_CLANG_TIDY)
-    myproject_enable_clang_tidy(myproject_options ${myproject_WARNINGS_AS_ERRORS})
+  if(tray_tracker_ENABLE_CLANG_TIDY)
+    tray_tracker_enable_clang_tidy(tray_tracker_options ${tray_tracker_WARNINGS_AS_ERRORS})
   endif()
 
-  if(myproject_ENABLE_CPPCHECK)
-    myproject_enable_cppcheck(${myproject_WARNINGS_AS_ERRORS} "" # override cppcheck options
+  if(tray_tracker_ENABLE_CPPCHECK)
+    tray_tracker_enable_cppcheck(${tray_tracker_WARNINGS_AS_ERRORS} "" # override cppcheck options
     )
   endif()
 
-  if(myproject_ENABLE_COVERAGE)
+  if(tray_tracker_ENABLE_COVERAGE)
     include(cmake/Tests.cmake)
-    myproject_enable_coverage(myproject_options)
+    tray_tracker_enable_coverage(tray_tracker_options)
   endif()
 
-  if(myproject_WARNINGS_AS_ERRORS)
+  if(tray_tracker_WARNINGS_AS_ERRORS)
     check_cxx_compiler_flag("-Wl,--fatal-warnings" LINKER_FATAL_WARNINGS)
     if(LINKER_FATAL_WARNINGS)
       # This is not working consistently, so disabling for now
-      # target_link_options(myproject_options INTERFACE -Wl,--fatal-warnings)
+      # target_link_options(tray_tracker_options INTERFACE -Wl,--fatal-warnings)
     endif()
   endif()
 
-  if(myproject_ENABLE_HARDENING AND NOT myproject_ENABLE_GLOBAL_HARDENING)
+  if(tray_tracker_ENABLE_HARDENING AND NOT tray_tracker_ENABLE_GLOBAL_HARDENING)
     include(cmake/Hardening.cmake)
     if(NOT SUPPORTS_UBSAN 
-       OR myproject_ENABLE_SANITIZER_UNDEFINED
-       OR myproject_ENABLE_SANITIZER_ADDRESS
-       OR myproject_ENABLE_SANITIZER_THREAD
-       OR myproject_ENABLE_SANITIZER_LEAK)
+       OR tray_tracker_ENABLE_SANITIZER_UNDEFINED
+       OR tray_tracker_ENABLE_SANITIZER_ADDRESS
+       OR tray_tracker_ENABLE_SANITIZER_THREAD
+       OR tray_tracker_ENABLE_SANITIZER_LEAK)
       set(ENABLE_UBSAN_MINIMAL_RUNTIME FALSE)
     else()
       set(ENABLE_UBSAN_MINIMAL_RUNTIME TRUE)
     endif()
-    myproject_enable_hardening(myproject_options OFF ${ENABLE_UBSAN_MINIMAL_RUNTIME})
+    tray_tracker_enable_hardening(tray_tracker_options OFF ${ENABLE_UBSAN_MINIMAL_RUNTIME})
   endif()
 
 endmacro()
